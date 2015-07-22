@@ -1,0 +1,191 @@
+body{
+	font-family:time, serif;
+	max-width:100vw;
+	overflow-x: hidden;
+	background:#27211F;
+}
+h1, h2, h3, h4{
+	color: #4BD1D3;
+	font-family: museo;
+}
+a {
+	color:#C5A983;
+}
+[role=main]{
+	max-width:70%;
+	margin:auto;
+}
+.tbz-tabs a:focus,
+.tbz-tabs a:hover {
+	transition:.3s all ease-in-out;
+	outline: 2px solid #C5A983;
+	padding:.25em 0;
+}
+.tbz-tabs{
+	margin:1em 0 2em;
+}
+.tbz-tabs__nav-item{
+	border:2px solid #C5A983;
+	color:#C5A983;
+	display:inline-block;
+	margin-right: .5em;
+	padding:.25em 1em .15em;
+	position:relative;
+	text-align: center;
+	text-decoration:none;
+	-webkit-transform-origin: 0 100%;
+	        transform-origin: 0 100% ;
+	        -webkit-transform: scale(1);
+	                transform: scale(1);
+	transition: .3s all ease-in-out;
+
+}
+.tbz-tabs__nav-item[aria-selected=true]{
+	color:#4BD1D3;
+	border-color:#4BD1D3;
+	z-index: 330;
+	transition: .3s all ease-in-out; 
+}
+.tbz-tabs__nav-item:hover,
+.tbz-tabs__nav-item:focus{
+	outline: 2px solid #fff;
+}
+
+.tbz-tabs__slide{
+	background:#fff;
+	position:relative;
+	box-sizing:border-box;
+	padding:2em;
+	border-top: .25em solid #4BD1D3;
+	text-align: center;
+	box-shadow: 0 0 1em rgba(0, 0, 0, .5);
+}
+
+
+
+button[data-delPanel]{
+	transition:.3s all ease-in-out;
+	transition: 0 -.5s text-indent;
+	border:0 solid  #266A6B;
+	outline:none;
+	cursor:pointer;
+	position:absolute;
+	top:0;
+	right:0;
+	height:2rem;
+	width:2rem;
+	overflow: hidden;
+	color:#fff;
+	font-weight: 700;
+	text-indent: -99em;
+
+	background-clip:border-box;
+	background: url('assets/img/trash.svg') #4BD1D3;
+	background-size: 1.5em;
+	background-repeat: no-repeat;
+	background-position:  .5em center;
+}
+button[data-delPanel]:hover,
+button[data-delPanel]:focus{
+	border-width:.25em;
+	width:auto;
+	text-indent: 2.5rem;
+}
+button[data-delPanel]:active{
+	-webkit-transform:scale(.9);
+	        transform:scale(.9);
+}
+/*
+body.js .tbz-tabs__slide[aria-selected=true]{
+	
+	-webkit-animation-fill-mode:both;
+	        animation-fill-mode:both;
+	-webkit-animation: .5s slideIn;
+	        animation: .5s slideIn;
+}
+
+body.js .tbz-tabs__slide.isFadding{
+	position:absolute;
+	-webkit-animation-fill-mode: both;
+	        animation-fill-mode: both;
+    -webkit-animation-name: slideOut;
+            animation-name: slideOut;
+    -webkit-animation-duration: .2s;
+            animation-duration: .2s;
+}
+body.js .tbz-tabs__slide[aria-hidden=true]:not(.isFadding){
+	display: none;
+}
+*/
+.tbz-tabs{
+	min-height:10em;
+	position:relative;
+	-webkit-perspective:500;
+        perspective:500;
+}
+.tbz-tabs__slide{
+	float:left;
+	will-change: transform;
+	width:100%;
+	transition:.3s all ease-in-out;
+}
+body.js .tbz-tabs__slide[aria-selected=true]{
+	
+	z-index:50;
+}
+
+body.js .tbz-tabs__slide[aria-hidden=true]:not(.isFadding){
+	position:absolute;
+	z-index: -1;
+	-webkit-transform: translateZ(-2em) translateY(2em) rotate(-1.5deg);
+	        transform: translateZ(-2em) translateY(2em) rotate(-1.5deg);
+	opacity:.5;
+}
+body.js .tbz-tabs__slide[aria-hidden=true]:not(.isFadding):nth-child(2){
+
+	z-index: -1;
+	-webkit-transform: translateZ(-2em) translateY(2em) rotate(1.5deg);
+	        transform: translateZ(-2em) translateY(2em) rotate(1.5deg);
+}
+
+@-webkit-keyframes slideIn {	
+		0%{
+		opacity:0;
+		-webkit-transform: translate(0, 5em);
+		        transform: translate(0, 5em);;
+	}
+	to{ 
+		opacity:1;
+		-webkit-transform: translate(0);
+		        transform: translate(0);
+	}
+}
+@keyframes slideIn {
+	0%{
+		opacity:0;
+		-webkit-transform: translate(0, 5em);
+		        transform: translate(0, 5em);;
+	}
+	to{ 
+		opacity:1;
+		-webkit-transform: translate(0);
+		        transform: translate(0);
+	}
+}
+
+
+@-webkit-keyframes slideOut {
+	
+	to{ 
+		
+		-webkit-transform: translateZ(5em) translateX(-100vw) rotate(-10deg);
+		        transform: translateZ(5em) translateX(-100vw) rotate(-10deg);
+	}
+}
+@keyframes slideOut {
+	
+	to{ 
+		-webkit-transform: translateZ(5em) translateX(-100vw) rotate(-10deg);
+		        transform: translateZ(5em) translateX(-100vw) rotate(-10deg);
+	}
+}

@@ -1,0 +1,34 @@
+:root {
+	--l-blue: #4BD1D3;
+	--l-brown: #C5A983;
+	--d-brown: #27211F;
+	--d-blue: #266A6B;
+	--l-blue-o5: rgba(75, 209, 211, .5);
+	--d-brown-o5: rgba(39, 33, 31, .5);
+	--l-brown-o5: rgba(197, 169, 131, .5);
+	--blanc-o5: rgba(255, 255, 255, .5);
+	--blanc: #fff;	
+
+	--text: "MuseoSlab-500", serif;
+	//--text: trebuchet, times, serif;
+	
+	--title: "Museo-500", arial, sans-serif;
+}
+
+*, *:before, *:after {
+	box-sizing:border-box;
+}
+
+body{
+	line-height: 1.5;
+}
+code{
+	display:block;
+	overflow-y:auto;
+	margin: 1em 0;
+	background: var(--d-brown);
+}
+@import url('externe/fonts.css');
+@import url('externe/reset.css');
+@import url('externe/prism.css');
+@import url('modules/base.css');

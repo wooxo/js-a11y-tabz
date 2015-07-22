@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Tabpannel widget accessible</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" href="assets/css/fonts.css" media="all">
+	<link rel="stylesheet" href="assets/css/main.css" media="all">
+</head>
+<body>
+	<header id="header" role="banner">
+			<h1><img alt="avelka" src="assets/img/logo-ak-15-v2.svg"><i>Tabpannel widget accessible</i></h1>
+	</header> <!-- header -->
+	<div id="main" role="main">
+		<h1>TabPanel widget en javascript, sans dépendances !</h1>
+		<div class='tbz-tabs caution'>
+			<div data-name="Bugs Connus">
+				<h2>Bug connus</h2>
+				<ol>
+					<li>Sur mac, les combinaisons utilisant normalement <kbd>Ctrl</kbd> devraient également fonctionner avec <kbd>cmd</kbd> <br/>(à tester)</li>
+					<li><kbd>Ctrl</kbd> + <kbd>page up</kbd>/<kbd>page down</kbd> ne fonctionne pas sur firefox/chrome (pas possible de surcharger le raccourci natif, pas forcément souhaitable non plus) et marche sur ie mais ne bloque pas le comportement normal d'ie (debut/fin de page) </li>
+				</ol>
+			</div>
+			<div data-name="Compatibilité observée">
+				<h2>Compatibilité actuelle</h2>
+				<p><a href="public/eventListener.polyfill.ie8.js"> EventListener polyfill</a> - <a href="//cdnjs.cloudflare.com/ajax/libs/classlist/2014.01.31/classList.min.js" >classlist.shim.js</a>    </p>
+				<ol>
+					<li>Firefox :  3.6+ </li>
+					<li>Chrome : 8+ ? (classList polyfill, 1+)</li>
+					<li>Opera : 11.5+ ? (10 avec polyfill addEventListener) </li>
+					<li>Internet Explorer : 10+</li>
+					<li>IE 9 : classlist polyfill nécéssaire</li>
+					<li>IE 8 : polyfill eventlistener et classList nécessaire, navigation clavier perturbé, mais possible.</li>
+					<li>IE 7, 6 : Consultable, mais pas d'interaction.
+				</ol>
+			</div>
+		</div>
+		<p class="dll-zone">Télécharger les sources : <a class="dll-btn" href="public/tabz.0.4.dev.js">tabz.0.4.dev.js, 12.6ko</a> <a class="dll-btn" href="public/tabz.0.4.min.js">tabz.0.4.min.js, 7ko</a></p>
+		<h2>Fiable</h2>
+		<div class="tbz-tabs">
+			<div data-deletion data-name="Robuste et accessible">
+				<h3>Robuste</h3>
+				<p>Le système de panneaux navigable utilise une base <a href="#">des plus simples :</a> une balise qui sert de conteneur et chacun de ses enfants direct représentent un panneau ! <br>
+				Non, rien de plus.
+				</p>
+				<h3>Accessible</h3>
+				<p>Les éléments pertinent se voient ajouter les rôles et attributs ARIA correspondant.</p>
+				<p>L'ordre de tabulation est logique et solide.</p>
+			</div>
+			<div data-name="Navigable au clavier">
+				<h3>Navigable au clavier</h3>
+				<p>L'ensemble des éléments sont utilisable au clavier, pour plusieurs type d'intéractions</p>
+				<h4>Depuis le menu de navigation</h4>
+				<ul>
+					<li><strong>Panneau suivant :</strong> touches droite <kbd>►</kbd>, bas <kbd>▼</kbd> et <kbd>Page ▼</kbd></li>
+					<li><strong>Panneau précédent :</strong> touches haut <kbd>▲</kbd>, gauche <kbd>◄</kbd> et <kbd>Page ▲</kbd></li>
+					<li><strong>Premier panneau :</strong> touche <kbd>Début ▮◄</kbd></li>
+					<li><strong>Dernier panneau :</strong> touche <kbd>Fin ►▮</kbd></li>
+					<li><strong>Suppression :</strong> la combinaison <kbd>Alt</kbd> + <kbd>Suppr</kbd> (si autorisé, cf. options)</li>		
+				</ul>
+				<h4>Depuis les panneaux</h4>
+				<ul>
+					<li><strong>Panneau suivant :</strong> la combinaison <kbd>ctrl</kbd> + <kbd>Page ▼</kbd></li>
+					<li><strong>Panneau précédent :</strong> la combinaison <kbd>Ctrl</kbd> + <kbd>Page ▲</kbd></li>
+					<li><strong>Sélectioner l'onglet courant :</strong>combinaison <kbd>Ctrl</kbd> + <kbd>▲</kbd></li>
+					<li><strong>Suppression :</strong> la combinaison <kbd>Alt</kbd>+<kbd>Suppr</kbd> (si autorisé, cf. options)</li>					
+				</ul>
+			</div>
+			<div data-name="Inspirations">
+				<h3>Inspiration</h3>
+				<p>Inspiré par <a href="http://a11y.nicolas-hoffmann.net/tabs/" lang="en">le tab panel system (en)</a> de Nicolas Hoffmann</p>
+				<h3>Spécification</h3>
+				<p>Le widget se base sur la description du w3c <a href="http://www.w3.org/TR/2013/WD-wai-aria-practices-20130307/#tabpanel" lang="en">d'un tab panel widget utilisant wai-aria (en)</a> 
+			</div>
+
+		</div>
+		
+		<h2>Pratique</h2>
+
+		<div class="tbz-tabs">
+			<div data-name="Facile à utiliser">
+					<h3>Le script est très facile à utiliser !</h3>
+					<p>Suivez simplement les étapes suivantes : </p>
+					<div class="tbz-tabs">
+						<div>
+							<h4>Référence au script et une petite ligne de CSS obligatoire</h4>
+							<code class="language-markup">
+	&lt;style&gt;
+	 /* Minimum requis en css */
+		[aria-hidden=true]{
+			display:none;
+		}
+		/*
+		Il y a moyen de contourner l'obligation de display none avec le module SecureTabIndex ( cf. configuration ),
+		Mais ça peut poser quelques problèmes sur le contenu des panneaux 
+		*/
+	&lt;/style&gt;
+
+	&lt;script type="text/javascript" src="chemin/vers/tabz.min.js"&gt;&lt;/script&gt;			
+							</code>
+						</div>
+						<div>
+							<h4>Un peu de markup html</h4>
+							<code class="language-markup">
+	&lt;div id="myTabPanelId"&gt;
+		&lt;div data-name="Slide 1"&gt;
+			&lt;h5&gt;Slide 1&lt;/h5&gt;
+			&lt;p&gt;
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt nesciunt enim deserunt, ratione ducimus iste, magnam doloribus magni nihil ad placeat impedit perspiciatis	aut earum at illo. Aut, harum iste?
+			&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;div data-name="Slide 2"&gt;
+			&lt;h5&gt;Slide 2&lt;/h5&gt;
+			&lt;p&gt;
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, eum? Illum laborum vero delectus, rem nisi? Dolores repudiandae praesentium architecto officiis laborum sapiente iusto libero ipsum, impedit magnam quae consectetur!
+			&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;div data-name="Et une dernière pour la route"&gt;
+			&lt;h5&gt;Slide 3&lt;/h5&gt;
+			&lt;p&gt;
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magni esse sequi assumenda repellat nemo debitis ipsum, eum maiores non eius facere eligendi ipsa modi dolores tempore quae velit porro.
+			&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;		
+							</code>
+						</div>
+						<div>
+							<h4>Initialisation (js)</h4>
+							<code class="language-javascript">
+	
+	function pageLoaded() {
+		/* any node, realy, you can use querySelector, querySelectorAll, or any method to get the reference of a nodeElement*/
+		var nodeExample = document.getElementById('myTabPanelId');
+		new TabPanel({ target: nodeExample });
+	}
+	document.addEventListener('Load', pageLoaded());
+							</code>
+						</div>
+						<div>
+						<h4>Et voila !</h4>
+							<div id="myTabPanelId">
+								<div data-name="Slide 1">
+									<h5>Slide 1</h5>
+									<p>
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt nesciunt enim deserunt, ratione ducimus iste, magnam doloribus magni nihil ad placeat impedit perspiciatis	aut earum at illo. Aut, harum iste?
+									</p>
+								</div>
+								<div data-name="Slide 2">
+									<h5>Slide 2</h5>
+									<p>
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, eum? Illum laborum vero delectus, rem nisi? Dolores repudiandae praesentium architecto officiis laborum sapiente iusto libero ipsum, impedit magnam quae consectetur!
+									</p>
+								</div>
+								<div data-name="Et une dernière pour la route">
+									<h5>Slide 3</h5>
+									<p>
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magni esse sequi assumenda repellat nemo debitis ipsum, eum maiores non eius facere eligendi ipsa modi dolores tempore quae velit porro.
+									</p>
+								</div>
+							</div>		
+						</div>
+					</div> 
+			</div>
+			<div data-name="Léger" >
+				<h3>Léger</h3>
+				<p>Sans traitements, le widget pèse environ <em>12ko</em> dans sa version complète. Certaines fonctionalitée avancée peuvent être enlevée etréduiront encore un peu le poid final!</p>
+				<p>Il y a deux module optionnel, l'un qui permet la gestion des animations css ( listener sur animationend ) et l'autre permetant de se passer du display none pour les panneau inactif ( permet de garder un comportement clavier normal tout en gardant les panneau inactif à l'écran)</p> 
+				<ul class="tbz-tabs">
+					<li data-name='Widget complet'>
+						<h4>Widget Complet</h4>
+						<ul>
+							<li>Sans optimisation : 12ko</li>
+							<li>Avec minification : 6.5ko</li>
+							<li>Compressé (gzip) : 2.1ko</li>
+						</ul>
+					</li>
+					<li data-name='Widget sans modules optionel'>
+						<h4>Widget sans modules optionnel</h4>
+						<ul>
+							<li>Sans optimisation : 10ko</li>
+							<li>Avec minification : 6.1ko</li>
+							<li>Compressé (gzip) : 1.9ko</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div data-name="Compatible">
+				Marche bien sur les dernières version de internet explorer, chrome et firefox. Les premiers problèmes devraient apparaître avec internet explorer 9  (tests complets à venir)
+			</div>
+			<div data-name="Configurable">
+				<h3>La configuration de ce module est très simple !</h3>
+				<p>Aucunes restriction autre que le bon sens pour le choix des balises à utiliser pour créer le widget.<br/> Exemple : (div > div, ul > li, section > article  ...) </p>
+				<div class="tbz-tabs">
+					<div data-name="Exemple de markup">
+					<h4>Section > article</h4>
+						<code class="language-markup">
+							&lt;section class="tabpanelWrapper"&gt;
+								&lt;article class="tabPanel"&gt;&lt;/article&gt;
+								&lt;article class="tabPanel"&gt;&lt;/article&gt;
+								&lt;article class="tabPanel"&gt;&lt;/article&gt;
+							&lt;/section&gt;
+						</code>
+						<h4>div > div</h4>
+						<code class="language-markup">
+							&lt;div class="tabpanelWrapper"&gt;
+								&lt;div class="tabPanel"&gt;&lt;/div&gt;
+								&lt;div class="tabPanel"&gt;&lt;/div&gt;
+								&lt;div class="tabPanel"&gt;&lt;/div&gt;
+							&lt;/div&gt;
+						</code>
+						<h4>ul > li</h4>
+						<code class="language-markup">
+							&lt;ul class="tabpanelWrapper"&gt;
+								&lt;li class="tabPanel"&gt;&lt;/li&gt;
+								&lt;li class="tabPanel"&gt;&lt;/li&gt;
+								&lt;li class="tabPanel"&gt;&lt;/li&gt;
+							&lt;/ul&gt;
+						</code>
+
+					</div>
+					<div data-name="Options de widget">
+						<h4>CallFunction Options</h4>
+			
+							<p>Le constructeur du widget prend en paramètre un objet listant les options</p>
+							<code class="language-javascript">
+
+	var options = {
+		//Obligatioire
+		target: node,   
+		// targetedNode reference
+		// Référence de l'élément à convertir
+		//   ex : document.getElementById('MyTabPanels')	
+
+		//Optionel
+
+		anim: true || false (default), 
+		// Rajoute une classe "isAnimated" aux panneaux qui changent d'état
+		// et attend la fin d'une animation css3 pour la retirer et désactiver 
+		// réelement le panneau.
+
+		secureTabIndex: true || false (default), 
+		// Active le module SecureTabIdex (cf description du module)
+
+		deleteBtn: true (default) || false, 
+		// Désactive les boutons de suppression, (mais pas la fonctionalité,
+		// toujours accessible avec le raccourci [alt + supr])
+
+		deteleBtnString: 'Delete '
+		// Chaine de caractère utilisé par les boutons de suppression comme
+		// texte ( défaut : 'Delete ') prendra la forme de 'Delete "tabName"' 
+	};
+						</code>
+					</div>
+
+					<div data-name="Options des paneaux">
+						<h4>Options des panneaux</h4>
+			
+							<p>Les options de panneaux permettent de spécifier des comportements particulier au panneau auquel elles sont affectée.</p>
+						
+							<dl>
+								<dt><code class="language-markup">id="MySlideName"</code></dt>
+								<dd>Les panneau n'ont pas besoin d'id pour fonctionner (le script en génère automatiquement). Vous pouvez tout de même spécifier les votres, pour les rendre plus lisible par exemple.
+								</dd>
+								
+								<dt><code class="language-markup">data-name="Un nom de panneau"</code></dt>
+								<dd>
+									Spécifie un nom pour le panneau. Il sera utilisé par le script pour générer l'onglet correspondant.<br/>
+									Les panneaux n'ayant pas de nom utilisent leur numero de position dans leur widget comme contenu de l'onglet.
+
+								</dd>
+								
+								<dt><code class="language-markup">data-deletion</code></dt> 
+								<dd>Permet la supression du panneau. La supression peut se faire via un raccourci clavier (alt+supr) ou un bouton spécifique.</dd> 
+								
+								<dt><code class="language-markup">aria-selected="true"</code></dt>
+								<dd>Permet de choisir le panneau sélectionné au chargement.<br/>Par défaut, le panneau sélectionné est le premier de la liste.
+								<span class="caution">Un seul des panneaux peut utiliser cet attribut !</span> 
+								</dd>
+							</dl>
+								
+							<p> L'utilisation d'autres attributs pour le style ou d'autres scripts est tout à fait possible et ne devraient pas interférer.</p>
+					</div>
+				</div>
+		</div>
+	</div> <!-- main -->
+	
+	<!-- Shim pour le support de classlist dans ie 8 / 9 ) (5.45ko) -->
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/classlist/2014.01.31/classList.min.js"></script>
+	<script type="text/javascript" src="assets/js/eventListener.polyfill.ie8.js"></script>
+	<script type="text/javascript" src="assets/js/prism.js"></script>
+	<!-- component (6.07ko) addEventListener bloque la compat inferieur ie 9-->
+	<script type="text/javascript" src="assets/js/app.js"></script>
+</body>
+</html>
