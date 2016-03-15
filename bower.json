@@ -1,0 +1,6 @@
+{
+  "name": "js-a11y-tabz",
+  "version": "0.1.3",
+  "main": "./public/tabz.0.4.min.js",
+  "ignore": [ "**/.*" ]
+}
